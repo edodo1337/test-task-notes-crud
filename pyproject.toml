@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["Eldar Mamedov <bumbleboo85@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django-filter = "^22.1"
+markdown = "^3.4.1"
+djangorestframework = "^3.14.0"
+flake8 = "^6.0.0"
+black = "^23.1.0"
+drf-yasg = "^1.21.5"
+djangorestframework-simplejwt = "^5.2.2"
+python-dotenv = "^1.0.0"
+psycopg2-binary = "^2.9.5"
+loguru = "^0.6.0"
+djangorestframework-dataclasses = "^1.2.0"
+pytest-django = "^4.5.2"
+pytest-factoryboy = "^2.5.1"
+django-extensions = "^3.2.1"
+gunicorn = "^20.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+skip-string-normalization = true
+skip-magic-trailing-comma = true
+exclude = '/migrations/'
+
+[tool.isort]
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+ensure_newline_before_comments = true
+use_parentheses = true
+add_imports = ['from __future__ import annotations']
+skip_gitignore = true
+skip = ['migrations']
