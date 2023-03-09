@@ -40,9 +40,8 @@ hosts = hosts.split() if hosts else ["*"]
 ALLOWED_HOSTS = hosts
 
 origins = os.getenv("CSRF_TRUSTED_ORIGINS")
-if origins:
-    origins = origins.split() if origins else ["*"]
-    CSRF_TRUSTED_ORIGINS = origins
+origins = origins.split() if origins else ["*"]
+CSRF_TRUSTED_ORIGINS = origins
 
 
 # Application definition
