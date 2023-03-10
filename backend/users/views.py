@@ -13,6 +13,11 @@ from rest_framework.permissions import AllowAny
 from users.permission import IsAuthenticatedAndHasProfile
 
 from users.serializers import ProfileCreateSerializer, ProfileSerializer, ProfileUpdateSerializer
+from users.utils import get_error_code, get_status_code_by_error
+from utils import catch_exception_factory
+
+
+catch_exception = catch_exception_factory(get_error_code, get_status_code_by_error)
 
 
 class ProfileViewSet(GenericAPIView, ViewSet):
@@ -21,6 +26,7 @@ class ProfileViewSet(GenericAPIView, ViewSet):
     pagination_class = None
 
     @swagger_auto_schema(responses={status.HTTP_200_OK: ProfileSerializer})
+    @catch_exception
     @action(methods=["GET"], detail=False)
     def me(self, request: Request, *args, **kwargs):
         profile = profile__by_user(user=request.user)
@@ -30,6 +36,7 @@ class ProfileViewSet(GenericAPIView, ViewSet):
     @swagger_auto_schema(
         request_body=ProfileCreateSerializer, responses={status.HTTP_201_CREATED: ProfileSerializer}
     )
+    @catch_exception
     @action(methods=["POST"], detail=False, permission_classes=(AllowAny,))
     def register(self, request: Request, *args, **kwargs):
         serializer = ProfileCreateSerializer(data=request.data)
@@ -45,6 +52,7 @@ class ProfileViewSet(GenericAPIView, ViewSet):
     @swagger_auto_schema(
         request_body=ProfileUpdateSerializer, responses={status.HTTP_200_OK: ProfileSerializer}
     )
+    @catch_exception
     @action(methods=["PATCH"], detail=False)
     def update_profile(self, request: Request):
         profile = request.user.profile

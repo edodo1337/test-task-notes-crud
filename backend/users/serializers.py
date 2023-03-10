@@ -4,9 +4,11 @@ from users.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username")
+
     class Meta:
         model = Profile
-        fields = ("pk", "full_name", "birth_date")
+        fields = ("pk", "full_name", "birth_date", "username")
 
 
 class ProfileCreateSerializer(serializers.Serializer):

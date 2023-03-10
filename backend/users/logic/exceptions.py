@@ -7,3 +7,7 @@ class ProfileNotFound(Exception):
 
 class PasswordDoesNotMatch(Exception):
     ...
+
+
+class UserAlreadyExists(Exception):
+    ...

@@ -1,5 +1,5 @@
 import datetime
-from users.logic.exceptions import PasswordDoesNotMatch
+from users.logic.exceptions import PasswordDoesNotMatch, UserAlreadyExists
 from users.models import Profile
 from django.contrib.auth.models import User
 
@@ -7,7 +7,14 @@ from django.contrib.auth.models import User
 def create_profile(
     *, full_name: str, birth_date: datetime.datetime, email: str, username: str, password: str
 ) -> Profile:
-    user = User.objects.create(username=username, password=password, email=email)
+    existing_user = User.objects.filter(username=username).first()
+    if existing_user is not None:
+        raise UserAlreadyExists(f"Username {username} is already taken")
+
+    user = User.objects.create(username=username, email=email)
+    user.set_password(password)
+    user.save()
+
     profile = Profile.objects.create(user=user, full_name=full_name, birth_date=birth_date)
 
     return profile

@@ -16,9 +16,13 @@ from notes.serializers import (
     NoteSerializer,
     NoteUpdateSerializer,
 )
+from notes.utils import get_error_code, get_status_code_by_error
 from users.logic.selectors import profile__by_user
-from notes.utils import catch_exception
 from users.permission import IsAuthenticatedAndHasProfile
+from utils import catch_exception_factory
+
+
+catch_exception = catch_exception_factory(get_error_code, get_status_code_by_error)
 
 
 class NotesViewSet(ListAPIView, RetrieveAPIView, ViewSet):
